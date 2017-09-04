@@ -131,57 +131,47 @@ class Okno(Frame):
 
         if x == center[0] and y > center[1]:
             x1 = (3*(math.pi)/2)
-            print(format(x1, '.4f'))
+            x1a = (3*(math.pi)/2*180/math.pi)
+            print("Kot v radianih = {0}".format(format(x1, '.4f')))
+            print("Kot v stopinjah = {0}".format(format(x1a, '.2f')))
         elif (kosinus_kota < 1e-8)and y<center[1]:
             x2 = ((math.pi)/2)
-            print(format(x2, '.4'))
+            x2a = ((math.pi)/2*180/math.pi)
+            print("Kot v radianih = {0}".format(format(x2, '.4')))
+            print("Kot v stopinjah = {0}".format(format(x2a, '.2f')))
         elif x > center[0] and y < center[1]:
             x3 = (math.atan(sinus_kota/kosinus_kota))
-            print(format(x3, '.4f'))
+            x3a = (math.atan(sinus_kota/kosinus_kota)*180/math.pi)
+            print("Kot v radianih = {0}".format(format(x3, '.4f')))
+            print("Kot v stopinjah = {0}".format(format(x3a, '.2f')))
         elif x < center[0] and y < center[1]:
             x4 = ((math.atan(kosinus_kota/sinus_kota) + (math.pi)/2))
-            print(format(x4, '.4f'))
+            x4a = ((math.atan(kosinus_kota/sinus_kota) + (math.pi)/2)*180/math.pi)
+            print("Kot v radianih = {0}".format(format(x4, '.4f')))
+            print("Kot v stopinjah = {0}".format(format(x4a, '.2f')))
         elif x > center[0] and y > center[1]:
             x5 = ((math.atan(kosinus_kota/sinus_kota) + 3*(math.pi)/2))
-            print(format(x5, '.4f'))
+            x5a = ((math.atan(kosinus_kota/sinus_kota) + 3*(math.pi)/2)*180/math.pi)
+            print("Kot v radianih = {0}".format(format(x5, '.4f')))
+            print("Kot v stopinjah = {0}".format(format(x5a, '.2f')))
         elif x >= center[0] and y == center[1]:
             x6 = (0)
-            print(format(x6, '.4f'))
+            x6a = (0)
+            print("Kot v radianih = {0}".format(format(x6, '.4f')))
+            print("Kot v stopinjah = {0}".format(format(x6a, '.2f')))
         elif x < center[0] and y == center[1]:
-            x7 = (math.pi*180/math.pi)
-            print(format(x7, '.4f'))
+            x7 = (math.pi)
+            x7a = (180)
+            print("Kot v radianih = {0}".format(format(x7, '.4f')))
+            print("Kot v stopinjah = {0}".format(format(x7a, '.2f')))
         else:
             x8 = ((math.atan(sinus_kota/kosinus_kota)+math.pi))
-            print(format(x8, '.4f'))
+            x8a = ((math.atan(sinus_kota/kosinus_kota)+math.pi)*180/math.pi)
+            print("Kot v radianih = {0}".format(format(x8, '.4f')))
+            print("Kot v stopinjah = {0}".format(format(x8a, '.2f')))
 
 
-    
-        
 
-        if x == center[0] and y > center[1]:
-            x1 = (3*(math.pi)/2*180/math.pi)
-            print(format(x1, '.2f'))
-        elif (kosinus_kota < 1e-8)and y<center[1]:
-            x2 = ((math.pi)/2*180/math.pi)
-            print(format(x2, '.2f'))
-        elif x > center[0] and y < center[1]:
-            x3 = (math.atan(sinus_kota/kosinus_kota)*180/math.pi)
-            print(format(x3, '.2f'))
-        elif x < center[0] and y < center[1]:
-            x4 = ((math.atan(kosinus_kota/sinus_kota) + (math.pi)/2)*180/math.pi)
-            print(format(x4, '.2f'))
-        elif x > center[0] and y > center[1]:
-            x5 = ((math.atan(kosinus_kota/sinus_kota) + 3*(math.pi)/2)*180/math.pi)
-            print(format(x5, '.2f'))
-        elif x >= center[0] and y == center[1]:
-            x6 = (0)
-            print(format(x6, '.2f'))
-        elif x < center[0] and y == center[1]:
-            x7 = (math.pi*180/math.pi)
-            print(format(x7, '.2f'))
-        else:
-            x8 = ((math.atan(sinus_kota/kosinus_kota)+math.pi)*180/math.pi)
-            print(format(x8, '.2f'))
 
 paleta = Tk()
 paleta.geometry("640x480")

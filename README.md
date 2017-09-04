@@ -1,2 +1,3 @@
 # Repozitorij
-Zbirka vseh projektov
+
+Tukaj bom naložil svoj projekt.

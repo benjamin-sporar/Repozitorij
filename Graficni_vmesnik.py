@@ -112,23 +112,66 @@ class Okno(Frame):
                                              center[1],
                                              fill = "red")
 
-        izraz1 = math.sqrt((fromCenter[1]*faktor1)**2)
-        izraz2 = math.sqrt((fromCenter[0]*faktor1)**2)
+        sinus_kota = math.sqrt((fromCenter[1]*faktor1)**2)/100
+        kosinus_kota = math.sqrt((fromCenter[0]*faktor1)**2)/100
+
+        if (kosinus_kota < 1e-8)and y<center[1]:
+            print("Sinus kota = {0}".format(format(sinus_kota,'.4f')))
+            print("Kosinus kota = {0}".format("0"))
+            print("Tangens kota = {0}".format("neskončno"))
+        elif (kosinus_kota < 1e-8)and y>center[1]:
+            print("Sinus kota = {0}".format(format(sinus_kota,'.4f')))
+            print("Kosinus kota = {0}".format("0"))
+            print("Tangens kota = {0}".format('-neskončno'))
+        else:
+            print("Sinus kota = {0}".format(format(sinus_kota,'.4f')))
+            print("Kosinus kota = {0}".format(format(kosinus_kota,'.4f')))
+            print("Tangens kota = {0}".format(format(sinus_kota/kosinus_kota,'.4f')))
+
+
+        if x == center[0] and y > center[1]:
+            x1 = (3*(math.pi)/2)
+            print(format(x1, '.4f'))
+        elif (kosinus_kota < 1e-8)and y<center[1]:
+            x2 = ((math.pi)/2)
+            print(format(x2, '.4'))
+        elif x > center[0] and y < center[1]:
+            x3 = (math.atan(sinus_kota/kosinus_kota))
+            print(format(x3, '.4f'))
+        elif x < center[0] and y < center[1]:
+            x4 = ((math.atan(kosinus_kota/sinus_kota) + (math.pi)/2))
+            print(format(x4, '.4f'))
+        elif x > center[0] and y > center[1]:
+            x5 = ((math.atan(kosinus_kota/sinus_kota) + 3*(math.pi)/2))
+            print(format(x5, '.4f'))
+        elif x >= center[0] and y == center[1]:
+            x6 = (0)
+            print(format(x6, '.4f'))
+        elif x < center[0] and y == center[1]:
+            x7 = (math.pi*180/math.pi)
+            print(format(x7, '.4f'))
+        else:
+            x8 = ((math.atan(sinus_kota/kosinus_kota)+math.pi))
+            print(format(x8, '.4f'))
+
+
+    
+        
 
         if x == center[0] and y > center[1]:
             x1 = (3*(math.pi)/2*180/math.pi)
             print(format(x1, '.2f'))
-        elif (izraz2 < 1e-8)and y<center[1]:
+        elif (kosinus_kota < 1e-8)and y<center[1]:
             x2 = ((math.pi)/2*180/math.pi)
             print(format(x2, '.2f'))
         elif x > center[0] and y < center[1]:
-            x3 = (math.atan(izraz1/izraz2)*180/math.pi)
+            x3 = (math.atan(sinus_kota/kosinus_kota)*180/math.pi)
             print(format(x3, '.2f'))
         elif x < center[0] and y < center[1]:
-            x4 = ((math.atan(izraz2/izraz1) + (math.pi)/2)*180/math.pi)
+            x4 = ((math.atan(kosinus_kota/sinus_kota) + (math.pi)/2)*180/math.pi)
             print(format(x4, '.2f'))
         elif x > center[0] and y > center[1]:
-            x5 = ((math.atan(izraz2/izraz1) + 3*(math.pi)/2)*180/math.pi)
+            x5 = ((math.atan(kosinus_kota/sinus_kota) + 3*(math.pi)/2)*180/math.pi)
             print(format(x5, '.2f'))
         elif x >= center[0] and y == center[1]:
             x6 = (0)
@@ -137,10 +180,8 @@ class Okno(Frame):
             x7 = (math.pi*180/math.pi)
             print(format(x7, '.2f'))
         else:
-            x8 = ((math.atan(izraz1/izraz2)+math.pi)*180/math.pi)
+            x8 = ((math.atan(sinus_kota/kosinus_kota)+math.pi)*180/math.pi)
             print(format(x8, '.2f'))
-
-
 
 paleta = Tk()
 paleta.geometry("640x480")

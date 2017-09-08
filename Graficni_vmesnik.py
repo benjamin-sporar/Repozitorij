@@ -13,7 +13,7 @@ class Okno(Frame):
         self.narisi_osi()
         
     def odpri_okno(self):
-        self.okno.title("Grafični vmesnik")
+        self.okno.title("Trigonometrični pripomoček")
         self.pack(fill = BOTH, expand = YES)
         menu = Menu(self.okno)
         self.okno.config(menu = menu)
@@ -22,13 +22,9 @@ class Okno(Frame):
         file.add_command(label = "Nadaljuj", command = self.nadaljuj)
         file.add_command(label = "Izhod", command = self.izhod)
         menu.add_cascade(label = "Datoteka", menu = file)
-        
-    def izhod(self):
-        exit()
-        
-    
+
     def shrani(self):
-        with open("shrani.txt","w") as shrani:
+        with open("shrani.txt", "w") as shrani:
             shrani.write("%d %d" % (self.x, self.y))  
 
     def nadaljuj(self):
@@ -39,13 +35,15 @@ class Okno(Frame):
                 y = float(vsebina[1])
                 self.narisi_poltrak(x, y)
         except FileNotFoundError:
-            return
+            pass
+        
+    def izhod(self):
+        exit()
             
     def narisi_bg(self):
         canvas = self.platno
         height = canvas["height"]
         width = canvas["width"]
-
         center = (int(width)/2, int(height)/2)
         canvas.create_oval(center[0]-100, center[1]-100, center[0]+100, center[1]+100)
 
@@ -54,7 +52,6 @@ class Okno(Frame):
         self.trikotnik2 = canvas.create_line(0,0,0,0)
 
     def narisi_osi(self):
-        
         canvas = self.platno
         height = canvas["height"]
         width = canvas["width"]
@@ -66,7 +63,7 @@ class Okno(Frame):
         self.osi1 = canvas.create_line(x1,x2)
         self.osi2 = canvas.create_line(y1,y2)
         
-        self.okvir = canvas.create_rectangle(30,550,800,580,fill = "white")
+        self.okvir = canvas.create_rectangle(30,550,810,580,fill = "white")
         
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
                                             text="Kot v radianih = ______ Rad")
@@ -94,7 +91,7 @@ class Okno(Frame):
         dolzina = math.sqrt(fromCenter[0]**2 + fromCenter[1]**2)
 
         if(dolzina < 1e-8):
-            return 
+            pass 
 
         faktor = 1000/dolzina
         canvas.delete(self.poltrak)
@@ -110,7 +107,6 @@ class Okno(Frame):
         self.poltrak = canvas.create_line(center,
                                           center[0]+fromCenter[0]*faktor,
                                           center[1]+fromCenter[1]*faktor)
-        
         self.trikotnik1 = canvas.create_line(center[0]+fromCenter[0]*faktor/10,
                                             center[1]+fromCenter[1]*faktor/10,
                                             center[0]+fromCenter[0]*faktor/10,
@@ -124,81 +120,80 @@ class Okno(Frame):
         kosinus_kota = math.sqrt((fromCenter[0]*faktor/10)**2)/100
 
         if x >= center[0] and y == center[1]:
-            x0 = (0)
-            k1=(format(x0, '.2f'))
-            k2=(format(x0, '.2f'))
-            k3=("0")
-            k4=("1")
-            k5=("0")  
+            k1 = format(0, '.2f')
+            k2 = format(0, '.2f')
+            k3 = "0"
+            k4 = "1"
+            k5 = "0"  
             
         if x > center[0] and y < center[1]:
-            x1 = (math.asin(sinus_kota))
-            k1=(format(x1, '.4f'))
-            k2=(format(x1*180/math.pi, '.2f'))
-            k3=(format(sinus_kota,'.3f'))
-            k4=(format(kosinus_kota,'.3f'))
-            k5=(format(sinus_kota/kosinus_kota,'.3f'))
+            x1 = math.asin(sinus_kota)
+            k1 = format(x1, '.4f')
+            k2 = format(math.degrees(x1), '.2f')
+            k3 = format(sinus_kota,'.3f')
+            k4 = format(kosinus_kota,'.3f')
+            k5 = format(sinus_kota/kosinus_kota,'.3f')
             
         elif (kosinus_kota < 1e-8) and y<center[1]:
-            x2 = ((math.pi)/2)
-            k1=(format(x2, '.4'))
-            k2=(format(x2*180/math.pi, '.2f'))
-            k3=(format(sinus_kota,'.2f'))
-            k4=("0")
-            k5=("neskončno")
+            x2 = (math.pi)/2
+            k1 = format(x2, '.4')
+            k2 = format(math.degrees(x2), '.2f')
+            k3 = format(sinus_kota,'.2f')
+            k4 = "0"
+            k5 = "'neskončno'"
                
         elif x < center[0] and y < center[1]:
-            x3 = ((math.atan(kosinus_kota/sinus_kota) + (math.pi)/2))
-            k1=(format(x3, '.4f'))
-            k2=(format(x3*180/math.pi, '.2f'))
-            k3=(format(sinus_kota,'.3f'))
-            k4=(format(-kosinus_kota,'.3f'))
-            k5=(format(-sinus_kota/kosinus_kota,'.3f'))
+            x3 = math.atan(kosinus_kota/sinus_kota) + (math.pi)/2
+            k1 = format(x3, '.4f')
+            k2 = format(math.degrees(x3), '.2f')
+            k3 = format(sinus_kota,'.3f')
+            k4 = format(-kosinus_kota,'.3f')
+            k5 = format(-sinus_kota/kosinus_kota,'.3f')
 
         elif x < center[0] and y == center[1]:
-            x4 = (math.pi)
-            k1=(format(x4, '.4f'))
-            k2=(format(180, '.2f'))
-            k3=("0")
-            k4=("-1")
-            k5=("0")
+            x4 = math.pi
+            k1 = format(x4, '.4f')
+            k2 = format(math.degrees(x4), '.2f')
+            k3 = "0"
+            k4 = "-1"
+            k5 = "0"
            
         elif x < center[0] and y > center[1]:
-            x5 = ((math.asin(sinus_kota)+math.pi))
-            k1=(format(x5, '.4f'))
-            k2=(format(x5*180/math.pi, '.2f'))
-            k3=(format(-sinus_kota,'.3f'))
-            k4=(format(-kosinus_kota,'.3f'))
-            k5=(format(sinus_kota/kosinus_kota,'.3f'))
+            x5 = math.asin(sinus_kota)+math.pi
+            k1 = format(x5, '.4f')
+            k2 = format(math.degrees(x5), '.2f')
+            k3 = format(-sinus_kota,'.3f')
+            k4 = format(-kosinus_kota,'.3f')
+            k5 = format(sinus_kota/kosinus_kota,'.3f')
               
         elif (kosinus_kota < 1e-8) and y > center[1]:
-            x6 = (3*(math.pi)/2)
-            k1=(format(x6, '.4f'))
-            k2=(format(x6*180/math.pi, '.2f'))
-            k3=("-1")
-            k4=("0")
-            k5=("-neskončno")
+            x6 = 3*(math.pi)/2
+            k1 = format(x6, '.4f')
+            k2 = format(math.degrees(x6), '.2f')
+            k3 = "- 1"
+            k4 = "0"
+            k5 = "'- neskončno'"
             
         elif x > center[0] and y > center[1]:
-            x8 = ((math.acos(kosinus_kota) + 3*(math.pi)/2))
-            k1=(format(x8, '.4f'))
-            k2=(format(x8*180/math.pi, '.2f'))
-            k3=(format(-sinus_kota,'.3f'))
-            k4=(format(kosinus_kota,'.3f'))
-            k5=(format(-sinus_kota/kosinus_kota,'.3f'))
+            x7 = math.atan(kosinus_kota/sinus_kota) + 3*(math.pi)/2
+            k1 = format(x7, '.4f')
+            k2 = format(math.degrees(x7), '.2f')
+            k3 = format(-sinus_kota,'.3f')
+            k4 = format(kosinus_kota,'.3f')
+            k5 = format(-sinus_kota/kosinus_kota,'.3f')
     
-        self.okvir = canvas.create_rectangle(30,550,800,580,fill = "white")
+        self.okvir = canvas.create_rectangle(30,550,810,580,fill = "white")
         
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
-                                        text="Kot v radianih = {} Rad".format((k1)))
+                                    text="Kot v radianih = {} Rad".format((k1)))
         self.izpis_kota_v_deg = canvas.create_text(int(width)-520,int(height)-15,
-                                        text="Kot v stopinjah = {} \u00b0".format((k2)))
+                                    text="Kot v stopinjah = {} \u00b0".format((k2)))
         self.izpis_sinusa = canvas.create_text(int(width)-380,int(height)-15,
-                                        text="Sinus kota = {}".format((k3)))
+                                    text="Sinus kota = {}".format((k3)),fill="green")
         self.izpis_kosinusa = canvas.create_text(int(width)-230,int(height)-15,
-                                        text="Kosinus kota = {}".format((k4)))
+                                    text="Kosinus kota = {}".format((k4)),fill="red")
         self.izpis_tangensa = canvas.create_text(int(width)-80,int(height)-15,
-                                        text="Tangens kota = {}".format((k5)))
+                                    text="Tangens kota = {}".format((k5)))
 
 paleta = Tk()
 napis = Label(paleta, text = "Pritisni na zaslon!")

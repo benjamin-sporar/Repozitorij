@@ -9,9 +9,10 @@ class Okno(Frame):
                              width = width, bg = "white")
         self.platno.pack(fill = BOTH, expand = YES)
         self.narisi_bg()
-        self.platno.bind('<Button-1>', self.klik_miske)
+        self.platno.bind('<Button-1>', self.klik_miske) #vsakič ko kliknemo levo tipko miške kličemo metodo klik miške
         self.odpri_okno()
         self.narisi_osi()
+    #ustvarimo okvir kjer se vse dogaja
         
     def odpri_okno(self):
         self.okno.title("Trigonometrični pripomoček")
@@ -23,14 +24,15 @@ class Okno(Frame):
         file.add_command(label = "Nadaljuj", command = self.nadaljuj)
         file.add_command(label = "Izhod", command = self.izhod)
         menu.add_cascade(label = "Datoteka", menu = file)
-
+    #ustvarimo osnovni meni, ki ima možnosti shrani, nadaljuj in izhod
     def shrani(self):
         try:
             with open("shrani.txt", "w") as shrani:
                 shrani.write("%d %d" % (self.x, self.y))  
         except (FileNotFoundError, AttributeError, ValueError):
             return
-        
+    #da lahko shranimo kar je trenutno na zaslonu, try in except dodana, če na začetku ni datoteke        
+
     def nadaljuj(self):
         try:
             with open("shrani.txt") as shrani:
@@ -40,10 +42,12 @@ class Okno(Frame):
                 self.narisi_poltrak(x, y)
         except (FileNotFoundError, AttributeError, ValueError):
             return
-        
+    #da lahko pokličemo tisto kar smo shranili, try in except dodana, če na začetku ni datoteke          
+
     def izhod(self):
         exit()
-            
+    #da lahko zapremo aplikacijo
+        
     def narisi_bg(self):
         canvas = self.platno
         height = canvas["height"]
@@ -54,6 +58,7 @@ class Okno(Frame):
         self.poltrak = canvas.create_line(0,0,0,0)
         self.trikotnik1 = canvas.create_line(0,0,0,0)
         self.trikotnik2 = canvas.create_line(0,0,0,0)
+    #metoda nariše ozadje, ter enotski krog
 
     def narisi_osi(self):
         canvas = self.platno
@@ -67,6 +72,7 @@ class Okno(Frame):
         self.osi1 = canvas.create_line(x1, x2)
         self.osi2 = canvas.create_line(y1, y2)
         self.okvir = canvas.create_rectangle(30,550,790,580,fill = "white")
+        
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
                 text = "Kot v radianih = ______ Rad")
         self.izpis_kota_v_deg = canvas.create_text(int(width)-520,int(height)-15,
@@ -77,9 +83,12 @@ class Okno(Frame):
                 text = "Kosinus kota = ____")
         self.izpis_tangensa = canvas.create_text(int(width)-100,int(height)-15,
                 text = "Tangens kota = _____")
-    def klik_miske(self, event):
-        self.narisi_poltrak(event.x,event.y)
+    #metoda ob zagonu programa nariše koordinatne osi, s centrom v sredini okvirja(ne okna!)
 
+    def klik_miske(self, event):
+        self.narisi_poltrak(event.x, event.y)
+    #zaradi lažje oblike shranjevanja
+        
     def narisi_poltrak(self, x, y):
         self.x = x
         self.y = y
@@ -87,18 +96,13 @@ class Okno(Frame):
         height = canvas["height"]
         width = canvas["width"]
         center = (int(width)/2, int(height)/2)
-        fromCenter = (x-center[0], y-center[1])
-        dolzina = math.sqrt(fromCenter[0]**2 + fromCenter[1]**2)
-
+        fromCenter = (x-center[0], y-center[1]) #koordinate glede na središče okvirja
+        dolzina = math.sqrt(fromCenter[0]**2 + fromCenter[1]**2) #razdalja od središča do mesta kjer kliknemo
+        
         if dolzina < 1e-8:
-            canvas.delete(self.poltrak)
-            canvas.delete(self.trikotnik1)
-            canvas.delete(self.trikotnik2)
-            canvas.delete(self.izpis_kota_v_rad)
-            canvas.delete(self.izpis_kota_v_deg)
-            canvas.delete(self.izpis_sinusa)
-            canvas.delete(self.izpis_kosinusa)
-            canvas.delete(self.izpis_tangensa)
+            canvas.delete(self.poltrak, self.trikotnik1,self.trikotnik2,
+                self.izpis_kota_v_rad, self.izpis_kota_v_deg, self.izpis_sinusa,
+                self.izpis_kosinusa, self.izpis_tangensa)
             self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
                     text = "Kot v radianih = ______ Rad")
             self.izpis_kota_v_deg = canvas.create_text(int(width)-520,int(height)-15,
@@ -109,28 +113,23 @@ class Okno(Frame):
                     text = "Kosinus kota = ____")
             self.izpis_tangensa = canvas.create_text(int(width)-100,int(height)-15,
                     text = "Tangens kota = _____")
-            return 
-        faktor = 1000/dolzina
-        canvas.delete(self.poltrak)
-        canvas.delete(self.trikotnik1)
-        canvas.delete(self.trikotnik2)
-        canvas.delete(self.okvir)
-        canvas.delete(self.izpis_kota_v_rad)
-        canvas.delete(self.izpis_kota_v_deg)
-        canvas.delete(self.izpis_sinusa)
-        canvas.delete(self.izpis_kosinusa)
-        canvas.delete(self.izpis_tangensa)
+            return
+            #izjema, če kliknemo v center nam vrne stanje ob zagonu
+        
+        faktor = 1000/dolzina #da se poltrak ne dotika kroga, temveč sega čez(za lažjo nastavitev želenega kota)
+        canvas.delete(self.poltrak, self.trikotnik1, self.trikotnik2, self.okvir,
+                self.izpis_kota_v_rad, self.izpis_kota_v_deg, self.izpis_sinusa,
+                self.izpis_kosinusa, self.izpis_tangensa)
+        #pobrišemo vse podatke izpisane ob prejšnjem kliku, skupaj z izrisanim poltrakom in pravoktnim trikotnikom
+        
         self.poltrak = canvas.create_line(center,
-                                          center[0] + fromCenter[0]*faktor,
-                                          center[1] + fromCenter[1]*faktor)
+            center[0] + fromCenter[0]*faktor, center[1] + fromCenter[1]*faktor)
         self.trikotnik1 = canvas.create_line(center[0] + fromCenter[0]*faktor/10,
-                                            center[1] + fromCenter[1]*faktor/10,
-                                            center[0] + fromCenter[0]*faktor/10,
-                                            center[1], fill = "red")
+            center[1] + fromCenter[1]*faktor/10,center[0] + fromCenter[0]*faktor/10,
+            center[1], fill = "red")
         self.trikotnik2 = canvas.create_line(center,
-                                             center[0] + fromCenter[0]*faktor/10,
-                                             center[1], 
-                                             fill = "green")
+            center[0] + fromCenter[0]*faktor/10, center[1], fill = "green")
+        #na novo narišemo poltrak in pravokotni trikotnik
         sinus_kota = math.sqrt((fromCenter[1]*faktor/10)**2)/100
         kosinus_kota = math.sqrt((fromCenter[0]*faktor/10)**2)/100 
             
@@ -195,6 +194,7 @@ class Okno(Frame):
             k3 = format(- sinus_kota,'.3f')
             k4 = format(kosinus_kota,'.3f')
             k5 = format(- sinus_kota/kosinus_kota,'.3f')
+        #definiramo katere vrednosti nam izpisuje glede na to v katerem kvadrantu smo
     
         self.okvir = canvas.create_rectangle(30,550,790,580,fill = "white")
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
@@ -207,6 +207,7 @@ class Okno(Frame):
                                     text = "Kosinus kota = {}".format(k4),fill = "green")
         self.izpis_tangensa = canvas.create_text(int(width)-100,int(height)-15,
                                     text = "Tangens kota = {}".format(k5))
+        #kaj točno se izpisuje v pravokotnik ob vsakem kliku
 
 paleta = Tk()
 napis = Label(paleta, text = "Pritisni na zaslon!")

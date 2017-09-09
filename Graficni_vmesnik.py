@@ -30,8 +30,8 @@ class Okno(Frame):
                 shrani.write("%d %d" % (self.x, self.y))  
         except (FileNotFoundError, AttributeError, ValueError):
             return
-    def nadaljuj(self):
         
+    def nadaljuj(self):
         try:
             with open("shrani.txt") as shrani:
                 vsebina = shrani.read().split(" ")
@@ -40,8 +40,7 @@ class Okno(Frame):
                 self.narisi_poltrak(x, y)
         except (FileNotFoundError, AttributeError, ValueError):
             return
- 
-            
+        
     def izhod(self):
         exit()
             
@@ -67,19 +66,17 @@ class Okno(Frame):
         y2 = (center[0],center[1]+ 1000)
         self.osi1 = canvas.create_line(x1, x2)
         self.osi2 = canvas.create_line(y1, y2)
-        
         self.okvir = canvas.create_rectangle(30,550,790,580,fill = "white")
-        
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
-                                            text = "Kot v radianih = ______ Rad")
+                text = "Kot v radianih = ______ Rad")
         self.izpis_kota_v_deg = canvas.create_text(int(width)-520,int(height)-15,
-                                            text = "Kot v stopinjah = ______\u00b0")
+                text = "Kot v stopinjah = ______\u00b0")
         self.izpis_sinusa = canvas.create_text(int(width)-380,int(height)-15,
-                                            text = "Sinus kota = ____")
+                text = "Sinus kota = ____")
         self.izpis_kosinusa = canvas.create_text(int(width)-250,int(height)-15,
-                                            text = "Kosinus kota = ____")
+                text = "Kosinus kota = ____")
         self.izpis_tangensa = canvas.create_text(int(width)-100,int(height)-15,
-                                            text = "Tangens kota = _____")
+                text = "Tangens kota = _____")
     def klik_miske(self, event):
         self.narisi_poltrak(event.x,event.y)
 
@@ -90,14 +87,29 @@ class Okno(Frame):
         height = canvas["height"]
         width = canvas["width"]
         center = (int(width)/2, int(height)/2)
-
         fromCenter = (x-center[0], y-center[1])
-
         dolzina = math.sqrt(fromCenter[0]**2 + fromCenter[1]**2)
 
-        if(dolzina < 1e-8):
+        if dolzina < 1e-8:
+            canvas.delete(self.poltrak)
+            canvas.delete(self.trikotnik1)
+            canvas.delete(self.trikotnik2)
+            canvas.delete(self.izpis_kota_v_rad)
+            canvas.delete(self.izpis_kota_v_deg)
+            canvas.delete(self.izpis_sinusa)
+            canvas.delete(self.izpis_kosinusa)
+            canvas.delete(self.izpis_tangensa)
+            self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
+                    text = "Kot v radianih = ______ Rad")
+            self.izpis_kota_v_deg = canvas.create_text(int(width)-520,int(height)-15,
+                    text = "Kot v stopinjah = ______\u00b0")
+            self.izpis_sinusa = canvas.create_text(int(width)-380,int(height)-15,
+                    text = "Sinus kota = ____")
+            self.izpis_kosinusa = canvas.create_text(int(width)-250,int(height)-15,
+                    text = "Kosinus kota = ____")
+            self.izpis_tangensa = canvas.create_text(int(width)-100,int(height)-15,
+                    text = "Tangens kota = _____")
             return 
-
         faktor = 1000/dolzina
         canvas.delete(self.poltrak)
         canvas.delete(self.trikotnik1)
@@ -108,7 +120,6 @@ class Okno(Frame):
         canvas.delete(self.izpis_sinusa)
         canvas.delete(self.izpis_kosinusa)
         canvas.delete(self.izpis_tangensa)
-        
         self.poltrak = canvas.create_line(center,
                                           center[0] + fromCenter[0]*faktor,
                                           center[1] + fromCenter[1]*faktor)
@@ -120,7 +131,6 @@ class Okno(Frame):
                                              center[0] + fromCenter[0]*faktor/10,
                                              center[1], 
                                              fill = "green")
-        
         sinus_kota = math.sqrt((fromCenter[1]*faktor/10)**2)/100
         kosinus_kota = math.sqrt((fromCenter[0]*faktor/10)**2)/100 
             
@@ -187,7 +197,6 @@ class Okno(Frame):
             k5 = format(- sinus_kota/kosinus_kota,'.3f')
     
         self.okvir = canvas.create_rectangle(30,550,790,580,fill = "white")
-        
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
                                     text = "Kot v radianih = {} Rad".format(k1))
         self.izpis_kota_v_deg = canvas.create_text(int(width)-520,int(height)-15,

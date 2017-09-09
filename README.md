@@ -5,6 +5,6 @@ Za projekt sem naredil osnoven trigonomtričen pripomoček, ki ob pritisku
 miške na zaslon izriše koordinatne osi in pravokoten trikontnik, ter
 izpiše kot v radianih, kot v stopinjah, sinus, kosinus in tangens tega
 kota. Tu imamo v mislih kot od desne strani vodoravne osi do poltraka, 
-gledan v pozitvni smeri.
+gledan v pozitivni smeri.
 Poleg tega lahko pri poljubni vrednosti shranimo trenutne lego in podatke,
 ki jih lahko pokličemo kasneje.

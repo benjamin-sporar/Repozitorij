@@ -28,7 +28,7 @@ class Okno(Frame):
     def shrani(self):
         try:
             with open("shrani.txt", "w") as shrani:
-                shrani.write("%d %d" % (self.x, self.y))  
+                shrani.write("{0} {1}".format(self.x, self.y))  
         except (FileNotFoundError, AttributeError, ValueError):
             return
     #da lahko shranimo kar je trenutno na zaslonu, try in except dodana, če na začetku ni datoteke        
@@ -42,7 +42,7 @@ class Okno(Frame):
                 self.narisi_poltrak(x, y)
         except (FileNotFoundError, AttributeError, ValueError):
             return
-    #da lahko pokličemo tisto kar smo shranili, try in except dodana, če na začetku ni datoteke          
+    #da lahko pokličemo tisto kar smo nazadnje shranili, try in except dodana, če na začetku ni datoteke          
 
     def izhod(self):
         exit()
@@ -194,7 +194,7 @@ class Okno(Frame):
             k3 = format(- sinus_kota,'.3f')
             k4 = format(kosinus_kota,'.3f')
             k5 = format(- sinus_kota/kosinus_kota,'.3f')
-        #definiramo katere vrednosti nam izpisuje glede na to v katerem kvadrantu smo
+        #definiramo katere vrednosti trigonometričnih funkcij nam izpisuje glede na to v katerem kvadrantu smo
     
         self.okvir = canvas.create_rectangle(30,550,790,580,fill = "white")
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,

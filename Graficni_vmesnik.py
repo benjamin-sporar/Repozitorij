@@ -71,7 +71,7 @@ class Okno(Frame):
         y2 = (center[0],center[1]+ 1000)
         self.osi1 = canvas.create_line(x1, x2)
         self.osi2 = canvas.create_line(y1, y2)
-        self.okvir = canvas.create_rectangle(30,550,790,580,fill = "white")
+        self.okvir = canvas.create_rectangle(30,550,790,580,fill = "grey")
         
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
                 text = "Kot v radianih = ______ Rad")
@@ -126,9 +126,9 @@ class Okno(Frame):
             center[0] + fromCenter[0]*faktor, center[1] + fromCenter[1]*faktor)
         self.trikotnik1 = canvas.create_line(center[0] + fromCenter[0]*faktor/10,
             center[1] + fromCenter[1]*faktor/10,center[0] + fromCenter[0]*faktor/10,
-            center[1], fill = "red")
+            center[1], fill = "purple")
         self.trikotnik2 = canvas.create_line(center,
-            center[0] + fromCenter[0]*faktor/10, center[1], fill = "green")
+            center[0] + fromCenter[0]*faktor/10, center[1], fill = "orange")
         #na novo narišemo poltrak in pravokotni trikotnik
         sinus_kota = math.sqrt((fromCenter[1]*faktor/10)**2)/100
         kosinus_kota = math.sqrt((fromCenter[0]*faktor/10)**2)/100 
@@ -196,15 +196,15 @@ class Okno(Frame):
             k5 = format(- sinus_kota/kosinus_kota,'.3f')
         #definiramo katere vrednosti trigonometričnih funkcij nam izpisuje glede na to v katerem kvadrantu smo
     
-        self.okvir = canvas.create_rectangle(30,550,790,580,fill = "white")
+        self.okvir = canvas.create_rectangle(30,550,790,580,fill = "grey")
         self.izpis_kota_v_rad = canvas.create_text(int(width)-680,int(height)-15,
                                     text = "Kot v radianih = {} Rad".format(k1))
         self.izpis_kota_v_deg = canvas.create_text(int(width)-520,int(height)-15,
                                     text = "Kot v stopinjah = {} \u00b0".format(k2))
         self.izpis_sinusa = canvas.create_text(int(width)-380,int(height)-15,
-                                    text = "Sinus kota = {}".format(k3),fill = "red")
+                                    text = "Sinus kota = {}".format(k3),fill = "purple")
         self.izpis_kosinusa = canvas.create_text(int(width)-250,int(height)-15,
-                                    text = "Kosinus kota = {}".format(k4),fill = "green")
+                                    text = "Kosinus kota = {}".format(k4),fill = "orange")
         self.izpis_tangensa = canvas.create_text(int(width)-100,int(height)-15,
                                     text = "Tangens kota = {}".format(k5))
         #kaj točno se izpisuje v pravokotnik ob vsakem kliku
